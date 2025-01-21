@@ -1,13 +1,19 @@
 ﻿
 namespace FlappyBird;
 
-partial class Form1
+partial class FlappyBird
 {
     private System.Windows.Forms.PictureBox flappyBird;
     private System.Windows.Forms.PictureBox pipeTop;
     private System.Windows.Forms.PictureBox pipeBottom;
     private System.Windows.Forms.PictureBox ground;
     private System.Windows.Forms.Timer gameTimer;
+
+
+    int pipeWidth = 125;
+    int pipeHeight = 400;
+    int padding = 200;
+    int groundHeight = 200;
 
 
     ///  Required designer variable.
@@ -28,11 +34,10 @@ partial class Form1
     private void InitializeComponent()
     {
         // Define FlappyBird
-        // TODO: add a picture
         this.flappyBird = new System.Windows.Forms.PictureBox();
         ((System.ComponentModel.ISupportInitialize)(this.flappyBird)).BeginInit();
         this.flappyBird.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-        this.flappyBird.BackColor = System.Drawing.Color.Yellow;
+        this.flappyBird.Image = System.Drawing.Image.FromFile("Resources/FlappyBird.png");
         this.flappyBird.Location = new System.Drawing.Point(69, 228);
         this.flappyBird.Name = "flappyBird";
         this.flappyBird.Size = new System.Drawing.Size(82, 69);
@@ -41,40 +46,37 @@ partial class Form1
 
 
         // Define Top Pipes
-        // TODO: add a picture
         this.pipeTop = new System.Windows.Forms.PictureBox();
         ((System.ComponentModel.ISupportInitialize)(this.pipeTop)).BeginInit();
-        this.pipeTop.BackColor = System.Drawing.Color.Green;
-        this.pipeTop.Location = new System.Drawing.Point(495, -59);
         this.pipeTop.Name = "pipeTop";
-        this.pipeTop.Size = new System.Drawing.Size(100, 266);
+        this.pipeTop.Image = System.Drawing.Image.FromFile("Resources/PipeTop.png");
+        this.pipeTop.Location = new System.Drawing.Point(600, 0);
+        this.pipeTop.Size = new System.Drawing.Size(pipeWidth, pipeHeight - padding);
         this.pipeTop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
         this.pipeTop.TabIndex = 0;
         this.pipeTop.TabStop = false;
         
 
         // Define Bottom Pipes
-        // TODO: add a picture
         this.pipeBottom = new System.Windows.Forms.PictureBox();
         ((System.ComponentModel.ISupportInitialize)(this.pipeBottom)).BeginInit();
-        this.pipeBottom.BackColor = System.Drawing.Color.Green;
-        this.pipeBottom.Location = new System.Drawing.Point(362, 418);
         this.pipeBottom.Name = "pipeBottom";
-        this.pipeBottom.Size = new System.Drawing.Size(109, 286);
+        this.pipeBottom.Image = System.Drawing.Image.FromFile("Resources/PipeBottom.png");
+        this.pipeBottom.Location = new System.Drawing.Point(400, 800 - pipeHeight);
+        this.pipeBottom.Size = new System.Drawing.Size(pipeWidth, pipeHeight);
         this.pipeBottom.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
         this.pipeBottom.TabIndex = 1;
         this.pipeBottom.TabStop = false;
 
         // ground
-        // TODO: add a picture
         this.ground = new System.Windows.Forms.PictureBox();
         ((System.ComponentModel.ISupportInitialize)(this.ground)).BeginInit();
-        this.ground.BackColor = System.Drawing.Color.Green;
-        this.ground.Location = new System.Drawing.Point(-16, 633);
         this.ground.Name = "ground";
-        this.ground.Size = new System.Drawing.Size(816, 120);
+        this.ground.Image = System.Drawing.Image.FromFile("Resources/Ground.png");
+        this.ground.Location = new System.Drawing.Point(-16, 616);
+        this.ground.Size = new System.Drawing.Size(816, 200);
         this.ground.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-        this.ground.TabIndex = 3;
+        this.ground.TabIndex = 2;
         this.ground.TabStop = false;
 
         // Define Background
@@ -83,7 +85,7 @@ partial class Form1
         this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         this.ClientSize = new System.Drawing.Size(800, 800);
         this.BackColor = System.Drawing.Color.SkyBlue;
-        this.Text = "Form1";
+        this.Text = "FlappyBird";
 
         // Define Game Timer
         this.gameTimer = new System.Windows.Forms.Timer(this.components);
