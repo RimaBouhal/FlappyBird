@@ -8,6 +8,7 @@ partial class FlappyBird
     private System.Windows.Forms.PictureBox pipeBottom;
     private System.Windows.Forms.PictureBox ground;
     private System.Windows.Forms.Timer gameTimer;
+    private System.Windows.Forms.Label scoreText;
 
 
     int pipeWidth = 125;
@@ -50,8 +51,8 @@ partial class FlappyBird
         ((System.ComponentModel.ISupportInitialize)(this.pipeTop)).BeginInit();
         this.pipeTop.Name = "pipeTop";
         this.pipeTop.Image = System.Drawing.Image.FromFile("Resources/PipeTop.png");
-        this.pipeTop.Location = new System.Drawing.Point(600, 0);
-        this.pipeTop.Size = new System.Drawing.Size(pipeWidth, pipeHeight - padding);
+        this.pipeTop.Location = new System.Drawing.Point(600, -padding);
+        this.pipeTop.Size = new System.Drawing.Size(pipeWidth, pipeHeight);
         this.pipeTop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
         this.pipeTop.TabIndex = 0;
         this.pipeTop.TabStop = false;
@@ -87,6 +88,17 @@ partial class FlappyBird
         this.BackColor = System.Drawing.Color.SkyBlue;
         this.Text = "FlappyBird";
 
+        // Define Score
+        this.scoreText = new System.Windows.Forms.Label();
+        this.scoreText.AutoSize = true;
+        this.scoreText.BackColor = System.Drawing.Color.PaleGoldenrod;
+        this.scoreText.Font = new System.Drawing.Font("Calibri", 20F);
+        this.scoreText.Location = new System.Drawing.Point(622, 700);
+        this.scoreText.Name = "scoreText";
+        this.scoreText.Size = new System.Drawing.Size(122, 37);
+        this.scoreText.TabIndex = 4;
+        this.scoreText.Text = "Score: 0";
+
         // Define Game Timer
         this.gameTimer = new System.Windows.Forms.Timer(this.components);
         this.gameTimer.Enabled = true;
@@ -96,10 +108,11 @@ partial class FlappyBird
         this.SuspendLayout();
 
         // Add Controls
+        this.Controls.Add(this.scoreText);
         this.Controls.Add(this.flappyBird);
+        this.Controls.Add(this.ground);
         this.Controls.Add(this.pipeTop);
         this.Controls.Add(this.pipeBottom);
-        this.Controls.Add(this.ground);
 
         // Space Bar to Fly
         this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FlapWings);
