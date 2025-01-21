@@ -1,6 +1,16 @@
 # :baby_chick: FlappyBird
 
-because I can.
+<img src="gameplay.png" alt="drawing" width="400"/>
+
+### :video_game: Getting Started
+
+navigate to FlappyBird/FlappyBird and run
+
+```
+dotnet run
+```
+
+hold the spacebar to fly up, release to fly down!
 
 -----
 <p>
