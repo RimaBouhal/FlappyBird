@@ -8,7 +8,9 @@ partial class FlappyBird
     private System.Windows.Forms.PictureBox pipeBottom;
     private System.Windows.Forms.PictureBox ground;
     private System.Windows.Forms.Timer gameTimer;
+    private System.Windows.Forms.Timer GameOverTimer;
     private System.Windows.Forms.Label scoreText;
+    private Label startLabel;
 
 
     int pipeWidth = 125;
@@ -34,7 +36,7 @@ partial class FlappyBird
 
     private void InitializeComponent()
     {
-        // Define FlappyBird
+        // Define Flappy Bird
         this.flappyBird = new System.Windows.Forms.PictureBox();
         ((System.ComponentModel.ISupportInitialize)(this.flappyBird)).BeginInit();
         this.flappyBird.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -44,7 +46,6 @@ partial class FlappyBird
         this.flappyBird.Size = new System.Drawing.Size(82, 69);
         this.flappyBird.TabIndex = 2;
         this.flappyBird.TabStop = false;
-
 
         // Define Top Pipes
         this.pipeTop = new System.Windows.Forms.PictureBox();
@@ -57,7 +58,6 @@ partial class FlappyBird
         this.pipeTop.TabIndex = 0;
         this.pipeTop.TabStop = false;
         
-
         // Define Bottom Pipes
         this.pipeBottom = new System.Windows.Forms.PictureBox();
         ((System.ComponentModel.ISupportInitialize)(this.pipeBottom)).BeginInit();
@@ -99,11 +99,28 @@ partial class FlappyBird
         this.scoreText.TabIndex = 4;
         this.scoreText.Text = "Score: 0";
 
+        // Define Start Label
+        this.startLabel = new Label();
+        this.startLabel.Text = "Press Space to Start";
+        this.startLabel.Font = new Font("Calibri", 16, FontStyle.Bold);
+        this.startLabel.ForeColor = Color.White;
+        this.startLabel.BackColor = Color.Transparent;
+        this.startLabel.AutoSize = true;
+        this.startLabel.Location = new Point(this.ClientSize.Width / 2 - 100, this.ClientSize.Height / 2 - 50); // Center it
+        this.Controls.Add(this.startLabel);
+
         // Define Game Timer
         this.gameTimer = new System.Windows.Forms.Timer(this.components);
-        this.gameTimer.Enabled = true;
+        this.gameTimer.Enabled = false;
         this.gameTimer.Interval = 20;
         this.gameTimer.Tick += new System.EventHandler(this.gameTimerEvent);
+        this.KeyDown += new KeyEventHandler(this.Form1_KeyDown);
+        
+        // Define GameOver Timer
+        this.GameOverTimer = new System.Windows.Forms.Timer(this.components);
+        this.GameOverTimer.Enabled = false;
+        this.GameOverTimer.Interval = 20;
+        this.GameOverTimer.Tick += new System.EventHandler(this.gameOverEvent);
 
         this.SuspendLayout();
 

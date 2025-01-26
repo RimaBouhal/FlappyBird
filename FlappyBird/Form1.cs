@@ -3,8 +3,11 @@ namespace FlappyBird;
 public partial class FlappyBird : Form
 {
     int pipeSpeed = 8;
-    int gravity = 10;
+    int gravity = 20;
     int score = 0;
+    private bool flying = false;
+    private bool dead = false;
+    private bool gameStarted = false;
     private Image originalBirdImage;
 
     public FlappyBird() {
@@ -13,21 +16,37 @@ public partial class FlappyBird : Form
     }
 
     public void FlapWings(object sender, KeyEventArgs e) {
+        if (dead) return;
+
         if (e.KeyCode == Keys.Space) {
-            gravity = -10;
-            UpdateBirdFlying();
+            gravity = -15;
+
+            if(!flying) {
+                UpdateBirdFlying();
+            }
+
+            flying = true;
         }
     }
 
     public void Fall(object sender, KeyEventArgs e) {
+        if (dead) return;
+
         if (e.KeyCode == Keys.Space) {
-            gravity = 10;
-            UpdateBirdFalling();
+            gravity = 15;
+            
+            if(flying) {
+                UpdateBirdFalling();
+            }
+
+            flying = false;
         }
     }
 
-    private void EndGame() {
+    private void GameOver() {
+        dead = true;
         gameTimer.Stop();
+        GameOverTimer.Start();
     }
 
     private void MovePipes() {
@@ -40,7 +59,7 @@ public partial class FlappyBird : Form
             score++;
         }
         
-        if(pipeTop.Left < -175)
+        if(pipeTop.Left < -180)
         {
             pipeTop.Top = rand.Next(200, Math.Min(pipeBottom.Top+200, 400)) - 400;
             pipeTop.Left = 950;
@@ -48,12 +67,7 @@ public partial class FlappyBird : Form
         }
     }
 
-    private void LevelUp() {
-        pipeSpeed++;
-    }
-    
-    private Image RotateImage(Image image, float angle)
-    {
+    private Image RotateImage(Image image, float angle) {
     Bitmap rotatedBmp = new Bitmap(image.Width, image.Height);
     rotatedBmp.SetResolution(image.HorizontalResolution, image.VerticalResolution);
 
@@ -73,11 +87,28 @@ public partial class FlappyBird : Form
         this.flappyBird.Image = RotateImage(originalBirdImage, angleDown);
     }
 
+
+    private void UpdateBirdDead() {
+        float angleDead = 90f;
+        this.flappyBird.Image = RotateImage(originalBirdImage, angleDead);
+    }
+
     private void UpdateBirdFlying() {
         float angleUp = -30f;
         this.flappyBird.Image = RotateImage(originalBirdImage, angleUp);
     }
 
+    private void Form1_KeyDown(object sender, KeyEventArgs e) {
+        if (!gameStarted && e.KeyCode == Keys.Space) {
+            gameStarted = true;
+            
+            this.gameTimer.Start();
+
+            if (startLabel != null) {
+                startLabel.Visible = false;
+            }
+        }
+    }
 
     private void gameTimerEvent(object sender, EventArgs e) {
         flappyBird.Top += gravity;
@@ -92,9 +123,20 @@ public partial class FlappyBird : Form
             flappyBird.Bounds.IntersectsWith(pipeBottom.Bounds)
             )
         {
-            EndGame();
+            GameOver();
         } 
 
         MovePipes();
+    }
+
+    private void gameOverEvent(object sender, EventArgs e) {
+        UpdateBirdDead();
+        gravity = 30;
+        flappyBird.Top += gravity;
+
+        if (flappyBird.Bounds.IntersectsWith(ground.Bounds))
+        {
+            GameOverTimer.Stop();
+        }
     }
 }
